@@ -181,6 +181,7 @@ func (fetcher *Fetcher) FetchURLs(urls []string) {
 		err := page.ExtractMetadata()
 		if err != nil {
 			fetcher.msgs <- OutputMsg{"Error when extracting metadata", err}
+			continue
 		}
 
 		// Store Page

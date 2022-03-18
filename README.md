@@ -4,7 +4,7 @@ https://www.notion.so/autifyhq/Backend-Engineer-Take-Home-Test-63032907b74341f8b
 # Fetch Application
 Application that, given a URL, fetches the HTML of the page at the URL.  Application stores metadata of each request, which can be returned by using the `-metadata` flag.
 
-## Fetch Arguments
+## Run Fetch
 After built, run fetch from the terminal by just calling:
     `./fetch`
 Or:
@@ -38,7 +38,8 @@ The image can then be run with the below command.  This executes the commands in
 To run the "./fetch" command inside the container, execute:
     `docker run --rm -it fay_chris_fetch sh`
 
-And then use the prompt to execute the fetch
+And then use the prompt to execute the fetch application per the instructions in "Fetch Arguments"
+
 ### Local
 Requirements: Go 1.17
 1. Checkout this repo to the dir "`go env GOPATH`/github.com/kellyfay94/fetch"
@@ -47,7 +48,13 @@ Requirements: Go 1.17
     `go mod vendor`
 4. Run the following command to build the executable
     `go build`
-5. 
+5. The application can then be executed with the instructions in "Fetch Arguments"
+
+
+## Note About Bug
+Upon fetching the "www.autify.com" page, only 104 `<img>` tags are counted.  Via a search of the www.autify.com.html document, there appear to be 134 `<img>` tags.  I ran out of time while investigating this (both the true number of `<img>` tags and if there was an issue with the application).
+
+I suspect that there are 134 images on the autify page, and the issue lies with the `html.Tokenizer`, with the potential that it is interpreting multiple tags together.  Given more time, I would like to use an html.Parser to sanitize the input first.
 
 ## Notes about Specifications
 The specification that defined this assignment left a few elements undefined / vague.  In a professional setting, these requirements would have been clarified before development.  Below are some of the undefined cases for this assignment:
@@ -74,6 +81,7 @@ The specification that defined this assignment left a few elements undefined / v
     * Assumption for Assignment: Count `<a>` as links and `<img>` as images.
     * Future Improvement: Clarify the definition of "image" and "link" for this project.  Some possible inclusions would be:
         * Count images included via CSS classes
+        * Count svgs as an "image"
         * Count images that may be added after a JavaScript is run (like the profile picture of the user on Google's Homepage)
         * Count "links" that may just be `<div>` with an "onClick()" or similar event
         * Count "links" of buttons / inputs  

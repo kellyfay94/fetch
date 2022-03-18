@@ -25,16 +25,15 @@ func (p *Page) ExtractMetadata() error {
 	// Iterate through the tokenized HTML
 	for {
 		tokenType := token.Next()
-		switch tokenType {
-		case html.ErrorToken:
+		switch {
+		case tokenType == html.ErrorToken:
 			err := token.Err()
 			// `io.EOF` is a an "error" that simply indicates end of file; don't pass this to the rest of the app
 			if err == io.EOF {
 				return nil
 			}
-			// Else, pass the Error Token to the app
 			return err
-		case html.StartTagToken:
+		case tokenType != html.EndTagToken:
 			nameB, _ := token.TagName()
 
 			// FUTURE IMPROVEMENT: While iterating through Nodes, also identify attributes to be fetched, and add to `Page` struct

@@ -1,0 +1,6 @@
+fetch
+vendor/
+*.html
+*.json
+.git/
+output.txt

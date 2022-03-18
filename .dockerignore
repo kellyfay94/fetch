@@ -1,0 +1,6 @@
+.git
+*.json
+*.html
+README.md
+fetch
+output.txt
